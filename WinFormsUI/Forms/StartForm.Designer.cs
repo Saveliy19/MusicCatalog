@@ -1,6 +1,6 @@
-﻿namespace MusicCatalog
+﻿namespace MusicCatalog.WinFormsUI.Forms
 {
-    partial class Form1
+    partial class StartForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
             SearchButton = new Button();
             SearchBox = new TextBox();
             label1 = new Label();
@@ -53,6 +53,7 @@
             // 
             SearchButton.BackgroundImage = Properties.Resources.adidas;
             SearchButton.BackgroundImageLayout = ImageLayout.Stretch;
+            SearchButton.Cursor = Cursors.Hand;
             SearchButton.ForeColor = SystemColors.Window;
             SearchButton.Location = new Point(653, 109);
             SearchButton.Name = "SearchButton";
@@ -64,6 +65,7 @@
             // SearchBox
             // 
             SearchBox.BackColor = SystemColors.Window;
+            SearchBox.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SearchBox.Location = new Point(12, 109);
             SearchBox.Multiline = true;
             SearchBox.Name = "SearchBox";
@@ -92,6 +94,7 @@
             radioButton1.BackgroundImageLayout = ImageLayout.Stretch;
             radioButton1.CheckAlign = ContentAlignment.MiddleCenter;
             radioButton1.Checked = true;
+            radioButton1.Cursor = Cursors.Hand;
             radioButton1.FlatAppearance.BorderColor = Color.White;
             radioButton1.FlatAppearance.BorderSize = 6;
             radioButton1.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
@@ -113,6 +116,7 @@
             // 
             radioButton2.Appearance = Appearance.Button;
             radioButton2.BackColor = Color.Black;
+            radioButton2.Cursor = Cursors.Hand;
             radioButton2.FlatAppearance.BorderColor = Color.White;
             radioButton2.FlatAppearance.BorderSize = 6;
             radioButton2.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
@@ -133,6 +137,7 @@
             // 
             radioButton3.Appearance = Appearance.Button;
             radioButton3.BackColor = Color.Black;
+            radioButton3.Cursor = Cursors.Hand;
             radioButton3.FlatAppearance.BorderColor = Color.White;
             radioButton3.FlatAppearance.BorderSize = 6;
             radioButton3.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
@@ -151,6 +156,7 @@
             // 
             radioButton4.Appearance = Appearance.Button;
             radioButton4.BackColor = Color.Black;
+            radioButton4.Cursor = Cursors.Hand;
             radioButton4.FlatAppearance.BorderColor = Color.White;
             radioButton4.FlatAppearance.BorderSize = 6;
             radioButton4.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
@@ -170,6 +176,7 @@
             // 
             radioButton5.Appearance = Appearance.Button;
             radioButton5.BackColor = Color.Black;
+            radioButton5.Cursor = Cursors.Hand;
             radioButton5.FlatAppearance.BorderColor = Color.White;
             radioButton5.FlatAppearance.BorderSize = 6;
             radioButton5.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
@@ -236,6 +243,7 @@
             // AdminButton
             // 
             AdminButton.BackColor = Color.Black;
+            AdminButton.Cursor = Cursors.Hand;
             AdminButton.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
             AdminButton.ForeColor = SystemColors.ButtonHighlight;
             AdminButton.Location = new Point(12, 675);
@@ -244,6 +252,7 @@
             AdminButton.TabIndex = 12;
             AdminButton.Text = "Администрирование";
             AdminButton.UseVisualStyleBackColor = false;
+            AdminButton.Click += AdminButton_Click;
             // 
             // pictureBox1
             // 
@@ -259,6 +268,7 @@
             // 
             exitButton.BackgroundImage = Properties.Resources.hb2;
             exitButton.BackgroundImageLayout = ImageLayout.Stretch;
+            exitButton.Cursor = Cursors.Hand;
             exitButton.Font = new Font("Showcard Gothic", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             exitButton.ForeColor = SystemColors.ButtonHighlight;
             exitButton.Location = new Point(12, 769);
@@ -268,8 +278,9 @@
             exitButton.Text = "Выход";
             exitButton.TextAlign = ContentAlignment.MiddleLeft;
             exitButton.UseVisualStyleBackColor = true;
+            exitButton.Click += exitButton_Click;
             // 
-            // Form1
+            // StartForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -286,7 +297,7 @@
             Controls.Add(SearchBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(1689, 1056);
-            Name = "Form1";
+            Name = "StartForm";
             Text = "HardBass";
             Load += Form1_Load;
             panel1.ResumeLayout(false);

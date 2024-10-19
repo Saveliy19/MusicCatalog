@@ -83,6 +83,16 @@ namespace MusicCatalog.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cat {
+            get {
+                object obj = ResourceManager.GetObject("cat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap hb {
             get {
                 object obj = ResourceManager.GetObject("hb", resourceCulture);
@@ -96,6 +106,16 @@ namespace MusicCatalog.Properties {
         internal static System.Drawing.Bitmap hb2 {
             get {
                 object obj = ResourceManager.GetObject("hb2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap inger {
+            get {
+                object obj = ResourceManager.GetObject("inger", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +143,29 @@ namespace MusicCatalog.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap vinyl {
+            get {
+                object obj = ResourceManager.GetObject("vinyl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap vinyl_record {
             get {
                 object obj = ResourceManager.GetObject("vinyl_record", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wolf {
+            get {
+                object obj = ResourceManager.GetObject("wolf", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

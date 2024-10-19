@@ -1,8 +1,9 @@
-namespace MusicCatalog
+
+namespace MusicCatalog.WinFormsUI.Forms
 {
-    public partial class Form1 : Form
+    public partial class StartForm : Form
     {
-        public Form1()
+        public StartForm()
         {
             InitializeComponent();
         }
@@ -50,6 +51,22 @@ namespace MusicCatalog
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void AdminButton_Click(object sender, EventArgs e)
+        {
+
+            AdministrationForm adminForm = new AdministrationForm(this);
+
+            adminForm.Show();
+
+            this.Hide();
         }
     }
 }

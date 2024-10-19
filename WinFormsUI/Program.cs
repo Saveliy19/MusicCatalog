@@ -1,4 +1,7 @@
-namespace MusicCatalog
+using MusicCatalog.WinFormsUI.Forms;
+using MusicCatalog.DAL;
+
+namespace MusicCatalog.WinFormsUI
 {
     internal static class Program
     {
@@ -8,10 +11,11 @@ namespace MusicCatalog
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            DatabaseInitializer.Initialize();
+            
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new StartForm());
         }
     }
 }
