@@ -1,56 +1,52 @@
 
+using MusicCatalog.Core.Entities;
+using MusicCatalog.Core.Strategies;
+using MusicCatalog.DAL.Repositories;
+using System.DirectoryServices;
+
+using MusicCatalog.Core.Interfaces;
+
+
 namespace MusicCatalog.WinFormsUI.Forms
 {
     public partial class StartForm : Form
     {
+        private string _searchQuery = "";
+        private string _criteria = "All";
+
+        private static ArtistRepository _artistRepository = new ArtistRepository();
+        private static ArtistSearchStrategy _artistSearchStrategy = new ArtistSearchStrategy(_artistRepository);
+
+        
+
         public StartForm()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
+            SearchResult.Items.Clear();
 
-        }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
-        }
+            switch (_criteria)
+            {
+                case "Artists":
+                    List<Artist> artists;
+                    artists = _artistSearchStrategy.Search(_searchQuery);
+                    foreach (var artist in artists)
+                    {
+                        SearchResult.Items.Add(artist.Nickname);
+                    }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
+                    break;
 
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+                default:
+                    MessageBox.Show("Пожалуйста, выберите критерий поиска.");
+                    break;
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -67,6 +63,41 @@ namespace MusicCatalog.WinFormsUI.Forms
             adminForm.Show();
 
             this.Hide();
+        }
+
+        private void All_CheckedChanged(object sender, EventArgs e)
+        {
+            _criteria = "All";
+        }
+
+        private void Song_CheckedChanged(object sender, EventArgs e)
+        {
+            _criteria = "Song";
+        }
+
+        private void Albums_CheckedChanged(object sender, EventArgs e)
+        {
+            _criteria = "Albums";
+        }
+
+        private void PlayLists_CheckedChanged(object sender, EventArgs e)
+        {
+            _criteria = "PlayLists";
+        }
+
+        private void Artists_CheckedChanged(object sender, EventArgs e)
+        {
+            _criteria = "Artists";
+        }
+
+        private void SearchBox_TextChanged(object sender, EventArgs e)
+        {
+            _searchQuery = SearchBox.Text;
+        }
+
+        private void SearchResult_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

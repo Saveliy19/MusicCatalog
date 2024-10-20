@@ -24,13 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BLL\Builders\" />
-    <Folder Include="BLL\Strategies\" />
-    <Folder Include="Models\" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <Folder Include="BLL\" />
   </ItemGroup>
 
 </Project>

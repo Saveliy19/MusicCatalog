@@ -32,19 +32,17 @@
             SearchButton = new Button();
             SearchBox = new TextBox();
             label1 = new Label();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton3 = new RadioButton();
-            radioButton4 = new RadioButton();
-            radioButton5 = new RadioButton();
-            panel1 = new Panel();
-            SearchResultLabel = new Label();
+            All = new RadioButton();
+            Artists = new RadioButton();
+            Song = new RadioButton();
+            Albums = new RadioButton();
+            PlayLists = new RadioButton();
             SearchResult = new ListBox();
             SearchButtonsBox = new GroupBox();
             AdminButton = new Button();
             pictureBox1 = new PictureBox();
             exitButton = new Button();
-            panel1.SuspendLayout();
+            SearchResultLabel = new Label();
             SearchButtonsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -72,7 +70,7 @@
             SearchBox.Size = new Size(635, 96);
             SearchBox.TabIndex = 1;
             SearchBox.TextAlign = HorizontalAlignment.Center;
-            SearchBox.TextChanged += textBox1_TextChanged;
+            SearchBox.TextChanged += SearchBox_TextChanged;
             // 
             // label1
             // 
@@ -85,155 +83,137 @@
             label1.TabIndex = 2;
             label1.Text = "Музыкальный каталог HardBass";
             label1.TextAlign = ContentAlignment.MiddleCenter;
-            label1.Click += label1_Click;
             // 
-            // radioButton1
+            // All
             // 
-            radioButton1.Appearance = Appearance.Button;
-            radioButton1.BackColor = Color.Black;
-            radioButton1.BackgroundImageLayout = ImageLayout.Stretch;
-            radioButton1.CheckAlign = ContentAlignment.MiddleCenter;
-            radioButton1.Checked = true;
-            radioButton1.Cursor = Cursors.Hand;
-            radioButton1.FlatAppearance.BorderColor = Color.White;
-            radioButton1.FlatAppearance.BorderSize = 6;
-            radioButton1.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
-            radioButton1.FlatAppearance.MouseOverBackColor = Color.Black;
-            radioButton1.FlatStyle = FlatStyle.Flat;
-            radioButton1.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            radioButton1.ForeColor = SystemColors.ButtonHighlight;
-            radioButton1.Location = new Point(6, 9);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(285, 83);
-            radioButton1.TabIndex = 5;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Все";
-            radioButton1.TextAlign = ContentAlignment.MiddleCenter;
-            radioButton1.UseVisualStyleBackColor = false;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            All.Appearance = Appearance.Button;
+            All.BackColor = Color.Black;
+            All.BackgroundImageLayout = ImageLayout.Stretch;
+            All.CheckAlign = ContentAlignment.MiddleCenter;
+            All.Checked = true;
+            All.Cursor = Cursors.Hand;
+            All.FlatAppearance.BorderColor = Color.White;
+            All.FlatAppearance.BorderSize = 6;
+            All.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
+            All.FlatAppearance.MouseOverBackColor = Color.Black;
+            All.FlatStyle = FlatStyle.Flat;
+            All.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            All.ForeColor = SystemColors.ButtonHighlight;
+            All.Location = new Point(6, 9);
+            All.Name = "All";
+            All.Size = new Size(285, 83);
+            All.TabIndex = 5;
+            All.TabStop = true;
+            All.Text = "Все";
+            All.TextAlign = ContentAlignment.MiddleCenter;
+            All.UseVisualStyleBackColor = false;
+            All.CheckedChanged += All_CheckedChanged;
             // 
-            // radioButton2
+            // Artists
             // 
-            radioButton2.Appearance = Appearance.Button;
-            radioButton2.BackColor = Color.Black;
-            radioButton2.Cursor = Cursors.Hand;
-            radioButton2.FlatAppearance.BorderColor = Color.White;
-            radioButton2.FlatAppearance.BorderSize = 6;
-            radioButton2.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
-            radioButton2.FlatStyle = FlatStyle.Flat;
-            radioButton2.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            radioButton2.ForeColor = SystemColors.ButtonHighlight;
-            radioButton2.Location = new Point(6, 365);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(283, 83);
-            radioButton2.TabIndex = 6;
-            radioButton2.Text = "Исполнители";
-            radioButton2.TextAlign = ContentAlignment.MiddleCenter;
-            radioButton2.UseMnemonic = false;
-            radioButton2.UseVisualStyleBackColor = false;
-            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            Artists.Appearance = Appearance.Button;
+            Artists.BackColor = Color.Black;
+            Artists.Cursor = Cursors.Hand;
+            Artists.FlatAppearance.BorderColor = Color.White;
+            Artists.FlatAppearance.BorderSize = 6;
+            Artists.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
+            Artists.FlatStyle = FlatStyle.Flat;
+            Artists.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Artists.ForeColor = SystemColors.ButtonHighlight;
+            Artists.Location = new Point(6, 365);
+            Artists.Name = "Artists";
+            Artists.Size = new Size(283, 83);
+            Artists.TabIndex = 6;
+            Artists.Text = "Исполнители";
+            Artists.TextAlign = ContentAlignment.MiddleCenter;
+            Artists.UseMnemonic = false;
+            Artists.UseVisualStyleBackColor = false;
+            Artists.CheckedChanged += Artists_CheckedChanged;
             // 
-            // radioButton3
+            // Song
             // 
-            radioButton3.Appearance = Appearance.Button;
-            radioButton3.BackColor = Color.Black;
-            radioButton3.Cursor = Cursors.Hand;
-            radioButton3.FlatAppearance.BorderColor = Color.White;
-            radioButton3.FlatAppearance.BorderSize = 6;
-            radioButton3.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
-            radioButton3.FlatStyle = FlatStyle.Flat;
-            radioButton3.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            radioButton3.ForeColor = SystemColors.ButtonHighlight;
-            radioButton3.Location = new Point(6, 98);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(285, 83);
-            radioButton3.TabIndex = 7;
-            radioButton3.Text = "Треки";
-            radioButton3.TextAlign = ContentAlignment.MiddleCenter;
-            radioButton3.UseVisualStyleBackColor = false;
+            Song.Appearance = Appearance.Button;
+            Song.BackColor = Color.Black;
+            Song.Cursor = Cursors.Hand;
+            Song.FlatAppearance.BorderColor = Color.White;
+            Song.FlatAppearance.BorderSize = 6;
+            Song.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
+            Song.FlatStyle = FlatStyle.Flat;
+            Song.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Song.ForeColor = SystemColors.ButtonHighlight;
+            Song.Location = new Point(6, 98);
+            Song.Name = "Song";
+            Song.Size = new Size(285, 83);
+            Song.TabIndex = 7;
+            Song.Text = "Треки";
+            Song.TextAlign = ContentAlignment.MiddleCenter;
+            Song.UseVisualStyleBackColor = false;
+            Song.CheckedChanged += Song_CheckedChanged;
             // 
-            // radioButton4
+            // Albums
             // 
-            radioButton4.Appearance = Appearance.Button;
-            radioButton4.BackColor = Color.Black;
-            radioButton4.Cursor = Cursors.Hand;
-            radioButton4.FlatAppearance.BorderColor = Color.White;
-            radioButton4.FlatAppearance.BorderSize = 6;
-            radioButton4.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
-            radioButton4.FlatStyle = FlatStyle.Flat;
-            radioButton4.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            radioButton4.ForeColor = SystemColors.ButtonHighlight;
-            radioButton4.Location = new Point(6, 187);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(285, 83);
-            radioButton4.TabIndex = 8;
-            radioButton4.TabStop = true;
-            radioButton4.Text = "Альбомы";
-            radioButton4.TextAlign = ContentAlignment.MiddleCenter;
-            radioButton4.UseVisualStyleBackColor = false;
+            Albums.Appearance = Appearance.Button;
+            Albums.BackColor = Color.Black;
+            Albums.Cursor = Cursors.Hand;
+            Albums.FlatAppearance.BorderColor = Color.White;
+            Albums.FlatAppearance.BorderSize = 6;
+            Albums.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
+            Albums.FlatStyle = FlatStyle.Flat;
+            Albums.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Albums.ForeColor = SystemColors.ButtonHighlight;
+            Albums.Location = new Point(6, 187);
+            Albums.Name = "Albums";
+            Albums.Size = new Size(285, 83);
+            Albums.TabIndex = 8;
+            Albums.TabStop = true;
+            Albums.Text = "Альбомы";
+            Albums.TextAlign = ContentAlignment.MiddleCenter;
+            Albums.UseVisualStyleBackColor = false;
+            Albums.CheckedChanged += Albums_CheckedChanged;
             // 
-            // radioButton5
+            // PlayLists
             // 
-            radioButton5.Appearance = Appearance.Button;
-            radioButton5.BackColor = Color.Black;
-            radioButton5.Cursor = Cursors.Hand;
-            radioButton5.FlatAppearance.BorderColor = Color.White;
-            radioButton5.FlatAppearance.BorderSize = 6;
-            radioButton5.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
-            radioButton5.FlatStyle = FlatStyle.Flat;
-            radioButton5.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            radioButton5.ForeColor = SystemColors.ButtonHighlight;
-            radioButton5.Location = new Point(6, 276);
-            radioButton5.Name = "radioButton5";
-            radioButton5.Size = new Size(283, 83);
-            radioButton5.TabIndex = 9;
-            radioButton5.TabStop = true;
-            radioButton5.Text = "Плейлисты";
-            radioButton5.TextAlign = ContentAlignment.MiddleCenter;
-            radioButton5.UseVisualStyleBackColor = false;
-            radioButton5.CheckedChanged += radioButton5_CheckedChanged;
-            // 
-            // panel1
-            // 
-            panel1.BackgroundImage = Properties.Resources.search_button;
-            panel1.BackgroundImageLayout = ImageLayout.Stretch;
-            panel1.Controls.Add(SearchResultLabel);
-            panel1.Controls.Add(SearchResult);
-            panel1.Location = new Point(773, 113);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(877, 859);
-            panel1.TabIndex = 10;
-            // 
-            // SearchResultLabel
-            // 
-            SearchResultLabel.BackColor = Color.Black;
-            SearchResultLabel.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SearchResultLabel.ForeColor = SystemColors.ButtonHighlight;
-            SearchResultLabel.Location = new Point(3, 0);
-            SearchResultLabel.Name = "SearchResultLabel";
-            SearchResultLabel.Size = new Size(871, 95);
-            SearchResultLabel.TabIndex = 1;
-            SearchResultLabel.Text = "Результаты поиска";
-            SearchResultLabel.TextAlign = ContentAlignment.MiddleCenter;
+            PlayLists.Appearance = Appearance.Button;
+            PlayLists.BackColor = Color.Black;
+            PlayLists.Cursor = Cursors.Hand;
+            PlayLists.FlatAppearance.BorderColor = Color.White;
+            PlayLists.FlatAppearance.BorderSize = 6;
+            PlayLists.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
+            PlayLists.FlatStyle = FlatStyle.Flat;
+            PlayLists.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            PlayLists.ForeColor = SystemColors.ButtonHighlight;
+            PlayLists.Location = new Point(6, 276);
+            PlayLists.Name = "PlayLists";
+            PlayLists.Size = new Size(283, 83);
+            PlayLists.TabIndex = 9;
+            PlayLists.TabStop = true;
+            PlayLists.Text = "Плейлисты";
+            PlayLists.TextAlign = ContentAlignment.MiddleCenter;
+            PlayLists.UseVisualStyleBackColor = false;
+            PlayLists.CheckedChanged += PlayLists_CheckedChanged;
             // 
             // SearchResult
             // 
+            SearchResult.Anchor = AnchorStyles.Top;
             SearchResult.BackColor = Color.Black;
+            SearchResult.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SearchResult.ForeColor = SystemColors.HighlightText;
             SearchResult.FormattingEnabled = true;
-            SearchResult.Location = new Point(3, 98);
+            SearchResult.ItemHeight = 46;
+            SearchResult.Location = new Point(779, 220);
             SearchResult.Name = "SearchResult";
-            SearchResult.Size = new Size(871, 772);
+            SearchResult.Size = new Size(871, 740);
             SearchResult.TabIndex = 0;
-            SearchResult.SelectedIndexChanged += listBox1_SelectedIndexChanged;
+            SearchResult.SelectedIndexChanged += SearchResult_SelectedIndexChanged;
             // 
             // SearchButtonsBox
             // 
             SearchButtonsBox.BackColor = Color.MistyRose;
-            SearchButtonsBox.Controls.Add(radioButton1);
-            SearchButtonsBox.Controls.Add(radioButton3);
-            SearchButtonsBox.Controls.Add(radioButton4);
-            SearchButtonsBox.Controls.Add(radioButton2);
-            SearchButtonsBox.Controls.Add(radioButton5);
+            SearchButtonsBox.Controls.Add(All);
+            SearchButtonsBox.Controls.Add(Song);
+            SearchButtonsBox.Controls.Add(Albums);
+            SearchButtonsBox.Controls.Add(Artists);
+            SearchButtonsBox.Controls.Add(PlayLists);
             SearchButtonsBox.Location = new Point(12, 211);
             SearchButtonsBox.Name = "SearchButtonsBox";
             SearchButtonsBox.Size = new Size(298, 458);
@@ -280,6 +260,18 @@
             exitButton.UseVisualStyleBackColor = true;
             exitButton.Click += exitButton_Click;
             // 
+            // SearchResultLabel
+            // 
+            SearchResultLabel.BackColor = Color.Black;
+            SearchResultLabel.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SearchResultLabel.ForeColor = SystemColors.ButtonHighlight;
+            SearchResultLabel.Location = new Point(779, 109);
+            SearchResultLabel.Name = "SearchResultLabel";
+            SearchResultLabel.Size = new Size(871, 95);
+            SearchResultLabel.TabIndex = 1;
+            SearchResultLabel.Text = "Результаты поиска";
+            SearchResultLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // StartForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -287,11 +279,12 @@
             BackColor = SystemColors.ControlDarkDark;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1662, 984);
+            Controls.Add(SearchResultLabel);
             Controls.Add(exitButton);
+            Controls.Add(SearchResult);
             Controls.Add(pictureBox1);
             Controls.Add(AdminButton);
             Controls.Add(SearchButtonsBox);
-            Controls.Add(panel1);
             Controls.Add(SearchButton);
             Controls.Add(label1);
             Controls.Add(SearchBox);
@@ -299,8 +292,6 @@
             MaximumSize = new Size(1689, 1056);
             Name = "StartForm";
             Text = "HardBass";
-            Load += Form1_Load;
-            panel1.ResumeLayout(false);
             SearchButtonsBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
@@ -312,17 +303,16 @@
         private Button SearchButton;
         private TextBox SearchBox;
         private Label label1;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
-        private RadioButton radioButton4;
-        private RadioButton radioButton5;
-        private Panel panel1;
+        private RadioButton All;
+        private RadioButton Artists;
+        private RadioButton Song;
+        private RadioButton Albums;
+        private RadioButton PlayLists;
         private GroupBox SearchButtonsBox;
         private ListBox SearchResult;
-        private Label SearchResultLabel;
         private Button AdminButton;
         private PictureBox pictureBox1;
         private Button exitButton;
+        private Label SearchResultLabel;
     }
 }
