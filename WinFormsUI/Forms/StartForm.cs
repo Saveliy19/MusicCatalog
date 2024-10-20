@@ -16,10 +16,12 @@ namespace MusicCatalog.WinFormsUI.Forms
 
         private static ArtistRepository _artistRepository = new ArtistRepository();
         private static AlbumRepository _albumRepository = new AlbumRepository();
+        private static PlayListRepository _playlistRepository = new PlayListRepository();
 
 
         private static ArtistSearchStrategy _artistSearchStrategy = new ArtistSearchStrategy(_artistRepository);
         private static AlbumSearchStrategy _albumSearchStrategy = new AlbumSearchStrategy(_albumRepository);
+        private static PlayListSearchStrategy _playListSearchStrategy = new PlayListSearchStrategy(_playlistRepository);
         
 
         public StartForm()
@@ -46,6 +48,17 @@ namespace MusicCatalog.WinFormsUI.Forms
             foreach (var album in albums)
             {
                 SearchResult.Items.Add($"{album.Name} - {album.ArtistName}");
+            }
+        }
+
+        private void ShowPlayLists()
+        {
+            SearchResult.Items.Clear();
+            List<PlayList> playLists;
+            playLists = _playListSearchStrategy.Search(_searchQuery);
+            foreach (var playlist in playLists)
+            {
+                SearchResult.Items.Add($"{playlist.Name} - {playlist.Id}");
             }
         }
 
@@ -91,6 +104,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void PlayLists_CheckedChanged(object sender, EventArgs e)
         {
             _criteria = "PlayLists";
+            ShowPlayLists();
         }
 
         private void Artists_CheckedChanged(object sender, EventArgs e)
@@ -113,6 +127,11 @@ namespace MusicCatalog.WinFormsUI.Forms
 
                 case "Albums":
                     ShowAlbums();
+
+                    break;
+
+                case "PlayLists":
+                    ShowPlayLists();
 
                     break;
 
