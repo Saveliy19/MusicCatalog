@@ -12,7 +12,7 @@ namespace MusicCatalog.Core.Entities
         public string Name { get; set; }
         public DateTime ReleaseDate { get; set; }
 
-        public int ArtistId { get; set; }
+        public string ArtistName { get; set; }
         public List<Song> Songs { get; set; }
     }
 }

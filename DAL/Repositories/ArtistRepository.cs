@@ -11,8 +11,6 @@ namespace MusicCatalog.DAL.Repositories
     internal class ArtistRepository : IRepository<Artist>
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
-
-
         public List<Artist> Search(string searchQuery)
         {
             var artists = new List<Artist>();

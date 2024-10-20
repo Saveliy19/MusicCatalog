@@ -14,9 +14,9 @@ namespace MusicCatalog.Core.Builders
 
         public AlbumBuilder() { _album = new Album(); }
 
-        public AlbumBuilder SetId(int id)
+        public AlbumBuilder SetArtistName(string name)
         {
-            _album.Id = id;
+            _album.ArtistName = name;
             return this;
         }
 
@@ -29,12 +29,6 @@ namespace MusicCatalog.Core.Builders
         public AlbumBuilder SetReleaseDate(DateTime date)
         {
             _album.ReleaseDate = date;
-            return this;
-        }
-
-        public AlbumBuilder ArtistId(int id)
-        {
-            _album.ArtistId = id;
             return this;
         }
 
