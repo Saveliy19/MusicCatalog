@@ -8,7 +8,7 @@ namespace MusicCatalog.Core.Interfaces
 {
     internal interface IRepository<T>
     {
-        List<T> Search(string searchQuery);
+        List<T> Search(string? searchQuery);
         void add(T entity);
     }
 }

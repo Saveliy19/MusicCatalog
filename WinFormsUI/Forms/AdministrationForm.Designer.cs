@@ -129,6 +129,7 @@
             MakeAlbumButton.TabIndex = 9;
             MakeAlbumButton.Text = "Создать альбом";
             MakeAlbumButton.UseVisualStyleBackColor = false;
+            MakeAlbumButton.Click += MakeAlbumButton_Click;
             // 
             // MakePlButton
             // 

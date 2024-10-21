@@ -44,5 +44,14 @@ namespace MusicCatalog.WinFormsUI.Forms
 
             this.Hide();
         }
+
+        private void MakeAlbumButton_Click(object sender, EventArgs e)
+        {
+            AlbumCreatingForm albumForm = new AlbumCreatingForm(this);
+
+            albumForm.Show();
+
+            this.Hide();
+        }
     }
 }

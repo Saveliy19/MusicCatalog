@@ -62,20 +62,41 @@ namespace MusicCatalog.DAL.Repositories
 
         public void add(Album album)
         {
+            int albumId;
+
             using (var connection = new SQLiteConnection(_connectionString))
             {
                 connection.Open();
 
                 var query = @"
                     INSERT INTO ALBUM (ALBUM_NAME, ARTIST_NICKNAME) 
-                    VALUES (@Name, @ArtistName)";
+                    VALUES (@Name, @ArtistName)
+                    RETURNING ID";
 
                 using (var command = new SQLiteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Name", album.Name);
                     command.Parameters.AddWithValue("@ArtistName", album.ArtistName);
 
-                    command.ExecuteNonQuery();
+                    albumId = Convert.ToInt32(command.ExecuteScalar());
+                }
+
+                query = @"
+                    INSERT INTO SONG (SONG_NAME, DURATION_SECONDS, ALBUM_ID, GENRE_NAME) 
+                    VALUES 
+                    (@SongName, @Duration, @AlbumId, @Genre)";
+
+                foreach (var song in album.Songs)
+                {
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SongName", song.Name);
+                        command.Parameters.AddWithValue("@Duration", song.Duration);
+                        command.Parameters.AddWithValue("@AlbumId", albumId);
+                        command.Parameters.AddWithValue("@Genre", song.Genre);
+                        command.ExecuteNonQuery();
+                    }
+                    
                 }
             }
         }
