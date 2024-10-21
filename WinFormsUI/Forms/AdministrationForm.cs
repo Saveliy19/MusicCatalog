@@ -17,7 +17,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         public AdministrationForm(StartForm startForm)
         {
             InitializeComponent();
-            _startForm = startForm; 
+            _startForm = startForm;
         }
 
         private void ArtistButton_Click(object sender, EventArgs e)
@@ -29,11 +29,20 @@ namespace MusicCatalog.WinFormsUI.Forms
             this.Hide();
         }
 
-        
+
         private void BackButton_Click(object sender, EventArgs e)
         {
             _startForm.Show();
             this.Close();
+        }
+
+        private void MakePlButton_Click(object sender, EventArgs e)
+        {
+            PlaylistCreatingForm playlistForm = new PlaylistCreatingForm(this);
+
+            playlistForm.Show();
+
+            this.Hide();
         }
     }
 }

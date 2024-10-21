@@ -57,19 +57,35 @@ namespace MusicCatalog.DAL.Repositories
 
         public void add(PlayList playList) 
         {
+            int playlistId;
             using (var connection = new SQLiteConnection(_connectionString))
             {
                 connection.Open();
 
                 var query = @"
-                    INSERT INTO  (PLAYLIST_NAME) 
-                    VALUES (@PLAYLISTNAME)";
+                    INSERT INTO PLAYLIST (PLAYLIST_NAME) 
+                    VALUES (@PLAYLISTNAME) 
+                    RETURNING ID";
 
                 using (var command = new SQLiteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@PLAYLISTNAME", playList.Name);
+                    playlistId = Convert.ToInt32(command.ExecuteScalar());
+                }
 
-                    command.ExecuteNonQuery();
+                query = @"
+                    INSERT INTO PLAYLIST_SONGS(SONG_ID, PLAYLIST_ID) 
+                    VALUES (@SONGID, @PLAYLISTID)";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    foreach (var song in playList.Songs)
+                    {
+                        
+                        command.Parameters.AddWithValue("@SONGID", song.Id);
+                        command.Parameters.AddWithValue("@PLAYLISTID", playlistId);
+                        command.ExecuteNonQuery();
+                    } 
                 }
             }
         }

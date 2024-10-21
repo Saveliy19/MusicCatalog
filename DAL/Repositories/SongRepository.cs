@@ -37,10 +37,12 @@ namespace MusicCatalog.DAL.Repositories
                         {
                             var songName = reader["SONG_NAME"].ToString();
                             var songGenre = reader["GENRE_NAME"].ToString();
+                            var songId = Convert.ToInt32(reader["ID"]);
                             
 
                             var songBuilder = new SongBuilder();
                             var song = songBuilder
+                                    .SetId(songId)
                                     .SetName(songName)
                                     .SetGenre(songGenre)
                                     .Build();

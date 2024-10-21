@@ -143,6 +143,7 @@
             MakePlButton.TabIndex = 8;
             MakePlButton.Text = "Создать плейлист";
             MakePlButton.UseVisualStyleBackColor = false;
+            MakePlButton.Click += MakePlButton_Click;
             // 
             // pictureBox4
             // 

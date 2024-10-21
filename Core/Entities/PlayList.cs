@@ -11,5 +11,10 @@ namespace MusicCatalog.Core.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Song> Songs { get; set; }
+
+        public PlayList()
+        {
+            Songs = new List<Song>();
+        }
     }
 }
