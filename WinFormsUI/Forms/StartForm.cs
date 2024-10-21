@@ -12,17 +12,23 @@ namespace MusicCatalog.WinFormsUI.Forms
     public partial class StartForm : Form
     {
         private string _searchQuery = "";
-        private string _criteria = "All";
+        private string _criteria = "Genre";
 
         private static ArtistRepository _artistRepository = new ArtistRepository();
         private static AlbumRepository _albumRepository = new AlbumRepository();
         private static PlayListRepository _playlistRepository = new PlayListRepository();
+        private static SongRepository _songRepository = new SongRepository();
 
 
         private static ArtistSearchStrategy _artistSearchStrategy = new ArtistSearchStrategy(_artistRepository);
         private static AlbumSearchStrategy _albumSearchStrategy = new AlbumSearchStrategy(_albumRepository);
         private static PlayListSearchStrategy _playListSearchStrategy = new PlayListSearchStrategy(_playlistRepository);
-        
+
+        private static SongNameSearchStrategy _songNameSearchStrategy = new SongNameSearchStrategy(_songRepository);
+        private static SongGenreSearchStrategy _songGenreSearchStrategy = new SongGenreSearchStrategy(_songRepository);
+
+        private SongSearchContext _songSearchContext = new SongSearchContext(_songGenreSearchStrategy);
+
 
         public StartForm()
         {
@@ -62,6 +68,17 @@ namespace MusicCatalog.WinFormsUI.Forms
             }
         }
 
+        private void ShowSongs()
+        {
+            SearchResult.Items.Clear();
+            List<Song> songs;
+            songs = _songSearchContext.Search(_searchQuery);
+            foreach (var song in songs)
+            {
+                SearchResult.Items.Add(song.Name);
+            }
+        }
+
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
@@ -86,12 +103,16 @@ namespace MusicCatalog.WinFormsUI.Forms
 
         private void All_CheckedChanged(object sender, EventArgs e)
         {
-            _criteria = "All";
+            _criteria = "Genre";
+            _songSearchContext.SetStrategy(_songGenreSearchStrategy);
+            ShowSongs();
         }
 
         private void Song_CheckedChanged(object sender, EventArgs e)
         {
             _criteria = "Song";
+            _songSearchContext.SetStrategy(_songNameSearchStrategy);
+            ShowSongs();
         }
 
         private void Albums_CheckedChanged(object sender, EventArgs e)
@@ -122,17 +143,18 @@ namespace MusicCatalog.WinFormsUI.Forms
             {
                 case "Artists":
                     ShowArtists();
-
                     break;
 
                 case "Albums":
                     ShowAlbums();
-
                     break;
 
                 case "PlayLists":
                     ShowPlayLists();
+                    break;
 
+                case "Song" or "Genre":
+                    ShowSongs();
                     break;
 
                 default:

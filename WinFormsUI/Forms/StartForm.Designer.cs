@@ -32,7 +32,7 @@
             SearchButton = new Button();
             SearchBox = new TextBox();
             label1 = new Label();
-            All = new RadioButton();
+            Genre = new RadioButton();
             Artists = new RadioButton();
             Song = new RadioButton();
             Albums = new RadioButton();
@@ -84,30 +84,30 @@
             label1.Text = "Музыкальный каталог HardBass";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // All
+            // Genre
             // 
-            All.Appearance = Appearance.Button;
-            All.BackColor = Color.Black;
-            All.BackgroundImageLayout = ImageLayout.Stretch;
-            All.CheckAlign = ContentAlignment.MiddleCenter;
-            All.Checked = true;
-            All.Cursor = Cursors.Hand;
-            All.FlatAppearance.BorderColor = Color.White;
-            All.FlatAppearance.BorderSize = 6;
-            All.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
-            All.FlatAppearance.MouseOverBackColor = Color.Black;
-            All.FlatStyle = FlatStyle.Flat;
-            All.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            All.ForeColor = SystemColors.ButtonHighlight;
-            All.Location = new Point(6, 9);
-            All.Name = "All";
-            All.Size = new Size(285, 83);
-            All.TabIndex = 5;
-            All.TabStop = true;
-            All.Text = "Все";
-            All.TextAlign = ContentAlignment.MiddleCenter;
-            All.UseVisualStyleBackColor = false;
-            All.CheckedChanged += All_CheckedChanged;
+            Genre.Appearance = Appearance.Button;
+            Genre.BackColor = Color.Black;
+            Genre.BackgroundImageLayout = ImageLayout.Stretch;
+            Genre.CheckAlign = ContentAlignment.MiddleCenter;
+            Genre.Checked = true;
+            Genre.Cursor = Cursors.Hand;
+            Genre.FlatAppearance.BorderColor = Color.White;
+            Genre.FlatAppearance.BorderSize = 6;
+            Genre.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
+            Genre.FlatAppearance.MouseOverBackColor = Color.Black;
+            Genre.FlatStyle = FlatStyle.Flat;
+            Genre.Font = new Font("Showcard Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Genre.ForeColor = SystemColors.ButtonHighlight;
+            Genre.Location = new Point(6, 9);
+            Genre.Name = "Genre";
+            Genre.Size = new Size(285, 83);
+            Genre.TabIndex = 5;
+            Genre.TabStop = true;
+            Genre.Text = "Трек по жанру";
+            Genre.TextAlign = ContentAlignment.MiddleCenter;
+            Genre.UseVisualStyleBackColor = false;
+            Genre.CheckedChanged += All_CheckedChanged;
             // 
             // Artists
             // 
@@ -118,7 +118,7 @@
             Artists.FlatAppearance.BorderSize = 6;
             Artists.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
             Artists.FlatStyle = FlatStyle.Flat;
-            Artists.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Artists.Font = new Font("Showcard Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Artists.ForeColor = SystemColors.ButtonHighlight;
             Artists.Location = new Point(6, 365);
             Artists.Name = "Artists";
@@ -139,13 +139,13 @@
             Song.FlatAppearance.BorderSize = 6;
             Song.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
             Song.FlatStyle = FlatStyle.Flat;
-            Song.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Song.Font = new Font("Showcard Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Song.ForeColor = SystemColors.ButtonHighlight;
             Song.Location = new Point(6, 98);
             Song.Name = "Song";
             Song.Size = new Size(285, 83);
             Song.TabIndex = 7;
-            Song.Text = "Треки";
+            Song.Text = "Трек по названию";
             Song.TextAlign = ContentAlignment.MiddleCenter;
             Song.UseVisualStyleBackColor = false;
             Song.CheckedChanged += Song_CheckedChanged;
@@ -159,7 +159,7 @@
             Albums.FlatAppearance.BorderSize = 6;
             Albums.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
             Albums.FlatStyle = FlatStyle.Flat;
-            Albums.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Albums.Font = new Font("Showcard Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Albums.ForeColor = SystemColors.ButtonHighlight;
             Albums.Location = new Point(6, 187);
             Albums.Name = "Albums";
@@ -180,7 +180,7 @@
             PlayLists.FlatAppearance.BorderSize = 6;
             PlayLists.FlatAppearance.CheckedBackColor = Color.FromArgb(0, 192, 0);
             PlayLists.FlatStyle = FlatStyle.Flat;
-            PlayLists.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            PlayLists.Font = new Font("Showcard Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             PlayLists.ForeColor = SystemColors.ButtonHighlight;
             PlayLists.Location = new Point(6, 276);
             PlayLists.Name = "PlayLists";
@@ -209,7 +209,7 @@
             // SearchButtonsBox
             // 
             SearchButtonsBox.BackColor = Color.MistyRose;
-            SearchButtonsBox.Controls.Add(All);
+            SearchButtonsBox.Controls.Add(Genre);
             SearchButtonsBox.Controls.Add(Song);
             SearchButtonsBox.Controls.Add(Albums);
             SearchButtonsBox.Controls.Add(Artists);
@@ -303,7 +303,7 @@
         private Button SearchButton;
         private TextBox SearchBox;
         private Label label1;
-        private RadioButton All;
+        private RadioButton Genre;
         private RadioButton Artists;
         private RadioButton Song;
         private RadioButton Albums;

@@ -36,7 +36,7 @@ namespace MusicCatalog.Core.Builders
             return this;
         }
 
-        public SongBuilder SetGenre(Genre genre)
+        public SongBuilder SetGenre(string genre)
         {
             _song.Genre = genre;
             return this;
