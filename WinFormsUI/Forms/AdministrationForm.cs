@@ -22,23 +22,18 @@ namespace MusicCatalog.WinFormsUI.Forms
 
         private void ArtistButton_Click(object sender, EventArgs e)
         {
+            AddArtistForm artistForm = new AddArtistForm(this);
 
+            artistForm.Show();
+
+            this.Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void BackButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
             _startForm.Show();
+            this.Close();
         }
     }
 }
