@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MusicCatalog.Core.Strategies.Albums
 {
-    internal class AlbumArtistSearchStrategy
+    internal class AlbumArtistSearchStrategy: ISearchStrategy<Album>
     {
         private readonly IAlbumRepository _repository;
 
