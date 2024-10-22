@@ -18,6 +18,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private string _criteria = "Genre";
 
         List<PlayList> _playLists;
+        List<Album> _albums;
 
         private SongSearchContext _songSearchContext = new SongSearchContext(new SongGenreSearchStrategy(SongRepository.Instance));
         private ArtistSearchContext _artistSearchContext = new ArtistSearchContext(new ArtistSearchStrategy(ArtistRepository.Instance));
@@ -42,8 +43,8 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void ShowAlbums()
         {
             SearchResult.Items.Clear();
-            List<Album> albums = _albumSearchContext.Search(_searchQuery);
-            foreach (var album in albums)
+            _albums = _albumSearchContext.Search(_searchQuery);
+            foreach (var album in _albums)
             {
                 SearchResult.Items.Add($"{album.Name} - {album.ArtistName}");
             }
@@ -165,7 +166,9 @@ namespace MusicCatalog.WinFormsUI.Forms
                     break;
 
                 case "Albums":
-                    // Здесь ты можешь получить и обработать выбранный альбом
+                    AboutAlbumForm albumForm = new AboutAlbumForm(this, _albums[SearchResult.SelectedIndex]);
+                    albumForm.Show();
+                    this.Hide();
                     break;
 
                 case "PlayLists":

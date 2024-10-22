@@ -58,7 +58,7 @@ namespace MusicCatalog.DAL.Repositories
                             var albumArtist = reader["ARTIST_NICKNAME"].ToString();
                             var releaseDate = Convert.ToDateTime(reader["RELEASE_DATE"]);
 
-
+                            var songs = _songRepository.SearchByAlbum(Convert.ToInt32(reader["ID"]));
                             var albumBuilder = new AlbumBuilder();
 
 
@@ -66,6 +66,7 @@ namespace MusicCatalog.DAL.Repositories
                                 .SetName(albumName)
                                 .SetArtistName(albumArtist)
                                 .SetReleaseDate(releaseDate)
+                                .AddSongs(songs)
                                 .Build();
 
                             albums.Add(album);
@@ -102,6 +103,7 @@ namespace MusicCatalog.DAL.Repositories
                             var albumArtist = reader["ARTIST_NICKNAME"].ToString();
                             var releaseDate = Convert.ToDateTime(reader["RELEASE_DATE"]);
 
+                            var songs = _songRepository.SearchByAlbum(Convert.ToInt32(reader["ID"]));
 
                             var albumBuilder = new AlbumBuilder();
 
@@ -110,6 +112,7 @@ namespace MusicCatalog.DAL.Repositories
                                 .SetName(albumName)
                                 .SetArtistName(albumArtist)
                                 .SetReleaseDate(releaseDate)
+                                .AddSongs(songs)
                                 .Build();
 
                             albums.Add(album);

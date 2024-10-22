@@ -58,7 +58,7 @@
             TrackListBox.Name = "TrackListBox";
             TrackListBox.Size = new Size(893, 580);
             TrackListBox.TabIndex = 5;
-            TrackListBox.SelectedIndexChanged += TrackListBox_SelectedIndexChanged;
+            
             // 
             // label2
             // 
@@ -106,9 +106,8 @@
             label3.Name = "label3";
             label3.Size = new Size(738, 313);
             label3.TabIndex = 14;
-            label3.Text = "Track List";
             label3.TextAlign = ContentAlignment.MiddleCenter;
-            label3.Click += label3_Click;
+            
             // 
             // AboutPlaylistForm
             // 
