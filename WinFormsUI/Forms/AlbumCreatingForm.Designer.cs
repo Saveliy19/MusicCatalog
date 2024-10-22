@@ -95,7 +95,7 @@
             Seconds.Name = "Seconds";
             Seconds.Size = new Size(124, 39);
             Seconds.TabIndex = 24;
-            Seconds.ValueChanged += Seconds_ValueChanged;
+            
             // 
             // label7
             // 
@@ -127,7 +127,7 @@
             Minutes.Name = "Minutes";
             Minutes.Size = new Size(124, 39);
             Minutes.TabIndex = 21;
-            Minutes.ValueChanged += Minutes_ValueChanged;
+            
             // 
             // AddSongButton
             // 
@@ -152,7 +152,7 @@
             SongName.Name = "SongName";
             SongName.Size = new Size(708, 89);
             SongName.TabIndex = 19;
-            SongName.TextChanged += SongName_TextChanged;
+            
             // 
             // label5
             // 
@@ -253,7 +253,7 @@
             AlbumName.Name = "AlbumName";
             AlbumName.Size = new Size(358, 89);
             AlbumName.TabIndex = 1;
-            AlbumName.TextChanged += AlbumName_TextChanged;
+            
             // 
             // SongListBox
             // 

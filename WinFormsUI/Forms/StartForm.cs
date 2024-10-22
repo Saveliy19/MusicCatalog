@@ -1,10 +1,13 @@
 
 using MusicCatalog.Core.Entities;
-using MusicCatalog.Core.Strategies;
 using MusicCatalog.DAL.Repositories;
 using System.DirectoryServices;
 
 using MusicCatalog.Core.Interfaces;
+using MusicCatalog.Core.Strategies.Songs;
+using MusicCatalog.Core.Strategies.Artists;
+using MusicCatalog.Core.Strategies.Playlists;
+using MusicCatalog.Core.Strategies.Albums;
 
 
 namespace MusicCatalog.WinFormsUI.Forms
@@ -14,21 +17,10 @@ namespace MusicCatalog.WinFormsUI.Forms
         private string _searchQuery = "";
         private string _criteria = "Genre";
 
-        private static ArtistRepository _artistRepository = new ArtistRepository();
-        private static AlbumRepository _albumRepository = new AlbumRepository();
-        private static PlayListRepository _playlistRepository = new PlayListRepository();
-        private static SongRepository _songRepository = new SongRepository();
-
-
-        private static ArtistSearchStrategy _artistSearchStrategy = new ArtistSearchStrategy(_artistRepository);
-        private static AlbumSearchStrategy _albumSearchStrategy = new AlbumSearchStrategy(_albumRepository);
-        private static PlayListSearchStrategy _playListSearchStrategy = new PlayListSearchStrategy(_playlistRepository);
-
-        private static SongNameSearchStrategy _songNameSearchStrategy = new SongNameSearchStrategy(_songRepository);
-        private static SongGenreSearchStrategy _songGenreSearchStrategy = new SongGenreSearchStrategy(_songRepository);
-
-        private SongSearchContext _songSearchContext = new SongSearchContext(_songGenreSearchStrategy);
-
+        private SongSearchContext _songSearchContext = new SongSearchContext(new SongGenreSearchStrategy(SongRepository.Instance));
+        private ArtistSearchContext _artistSearchContext = new ArtistSearchContext(new ArtistSearchStrategy(ArtistRepository.Instance));
+        private PlaylistSearchContext _playlistSearchContext = new PlaylistSearchContext(new PlayListSearchStrategy(PlayListRepository.Instance));
+        private AlbumSearchContext _albumSearchContext = new AlbumSearchContext(new AlbumNameSearchStrategy(AlbumRepository.Instance));
 
         public StartForm()
         {
@@ -38,8 +30,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void ShowArtists()
         {
             SearchResult.Items.Clear();
-            List<Artist> artists;
-            artists = _artistSearchStrategy.Search(_searchQuery);
+            List<Artist> artists = _artistSearchContext.Search(_searchQuery);
             foreach (var artist in artists)
             {
                 SearchResult.Items.Add(artist.Nickname);
@@ -49,8 +40,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void ShowAlbums()
         {
             SearchResult.Items.Clear();
-            List<Album> albums;
-            albums = _albumSearchStrategy.Search(_searchQuery);
+            List<Album> albums = _albumSearchContext.Search(_searchQuery);
             foreach (var album in albums)
             {
                 SearchResult.Items.Add($"{album.Name} - {album.ArtistName}");
@@ -60,8 +50,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void ShowPlayLists()
         {
             SearchResult.Items.Clear();
-            List<PlayList> playLists;
-            playLists = _playListSearchStrategy.Search(_searchQuery);
+            List<PlayList> playLists = _playlistSearchContext.Search(_searchQuery);
             foreach (var playlist in playLists)
             {
                 SearchResult.Items.Add($"{playlist.Name} - {playlist.Id}");
@@ -75,7 +64,9 @@ namespace MusicCatalog.WinFormsUI.Forms
             songs = _songSearchContext.Search(_searchQuery);
             foreach (var song in songs)
             {
-                SearchResult.Items.Add(song.Name);
+                SearchResult.Items.Add($"{song.Name}| исп.{song.ArtistName}| альб.{song.AlbumName}");
+                SearchResult.Items.Add($"{Convert.ToInt32(song.Duration) / 60}m {Convert.ToInt32(song.Duration) % 60}| {song.Genre}");
+                SearchResult.Items.Add("------------------------------------------------------------------------------------------");
             }
         }
 
@@ -104,14 +95,14 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void All_CheckedChanged(object sender, EventArgs e)
         {
             _criteria = "Genre";
-            _songSearchContext.SetStrategy(_songGenreSearchStrategy);
+            _songSearchContext.SetStrategy(new SongGenreSearchStrategy(SongRepository.Instance));
             ShowSongs();
         }
 
         private void Song_CheckedChanged(object sender, EventArgs e)
         {
             _criteria = "Song";
-            _songSearchContext.SetStrategy(_songNameSearchStrategy);
+            _songSearchContext.SetStrategy(new SongNameSearchStrategy(SongRepository.Instance));
             ShowSongs();
         }
 
@@ -119,7 +110,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         {
             _criteria = "Albums";
             ShowAlbums();
-            
+
         }
 
         private void PlayLists_CheckedChanged(object sender, EventArgs e)
@@ -138,7 +129,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
             _searchQuery = SearchBox.Text;
-            
+
             switch (_criteria)
             {
                 case "Artists":
@@ -164,6 +155,31 @@ namespace MusicCatalog.WinFormsUI.Forms
         }
 
         private void SearchResult_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_criteria)
+            {
+                case "Artists":
+
+                    break;
+
+                case "Albums":
+
+                    break;
+
+                case "PlayLists":
+
+                    break;
+
+                case "Song" or "Genre":
+                    break;
+
+                default:
+                    MessageBox.Show("Пожалуйста, выберите критерий поиска.");
+                    break;
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

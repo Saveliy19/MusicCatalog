@@ -11,11 +11,27 @@ using MusicCatalog.Core.Builders;
 
 namespace MusicCatalog.DAL.Repositories
 {
-    internal class PlayListRepository: IRepository<PlayList>
+    internal class PlayListRepository: IPlaylistRepository
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
 
-        public List<PlayList> Search(string searchQuery)
+        private static PlayListRepository _instance;
+
+        private PlayListRepository() { }
+
+        public static PlayListRepository Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new PlayListRepository();
+                }
+                return _instance;
+            }
+        }
+
+        public List<PlayList> SearchByName(string searchQuery)
         {
             List<PlayList> playLists = new List<PlayList>();
 
@@ -39,6 +55,8 @@ namespace MusicCatalog.DAL.Repositories
                             var playListName = reader["PLAYLIST_NAME"].ToString();
                             var playListId = Convert.ToInt32(reader["ID"]);
 
+
+
                             var playlistBuilder = new PlayListBuilder();
                             var playlist = playlistBuilder
                                     .SetName(playListName)
@@ -55,7 +73,7 @@ namespace MusicCatalog.DAL.Repositories
             return playLists;
         }
 
-        public void add(PlayList playList) 
+        public void Add(PlayList playList) 
         {
             int playlistId;
             using (var connection = new SQLiteConnection(_connectionString))

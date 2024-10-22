@@ -8,14 +8,32 @@ using MusicCatalog.Core.Interfaces;
 using MusicCatalog.Core.Entities;
 using System.Data.SQLite;
 using MusicCatalog.Core.Builders;
+using System.Xml.Linq;
 
 namespace MusicCatalog.DAL.Repositories
 {
-    internal class AlbumRepository: IRepository<Album>
+    internal class AlbumRepository: IAlbumRepository
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
+        private ISongRepository _songRepository = SongRepository.Instance;
 
-        public List<Album> Search(string searchQuery)
+        private static AlbumRepository _instance;
+
+        private AlbumRepository() { }
+
+        public static AlbumRepository Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new AlbumRepository();
+                }
+                return _instance;
+            }
+        }
+
+        public List<Album> SearchByName(string name)
         {
             var albums = new List<Album>();
 
@@ -30,7 +48,7 @@ namespace MusicCatalog.DAL.Repositories
 
                 using (var command = new SQLiteCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@SearchQuery", "%" + searchQuery + "%");
+                    command.Parameters.AddWithValue("@SearchQuery", "%" + name + "%");
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -60,7 +78,50 @@ namespace MusicCatalog.DAL.Repositories
             return albums;
         }
 
-        public void add(Album album)
+        public List<Album> SearchByArtistName(string artistName)
+        {
+            var albums = new List<Album>();
+            using (var connection = new SQLiteConnection(_connectionString))
+            {
+                connection.Open();
+
+                var query = @"
+                    SELECT *
+                    FROM ALBUM 
+                    WHERE ARTIST_NICKNAME LIKE @SearchQuery";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@SearchQuery", "%" + artistName + "%");
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var albumName = reader["ALBUM_NAME"].ToString();
+                            var albumArtist = reader["ARTIST_NICKNAME"].ToString();
+                            var releaseDate = Convert.ToDateTime(reader["RELEASE_DATE"]);
+
+
+                            var albumBuilder = new AlbumBuilder();
+
+
+                            var album = albumBuilder
+                                .SetName(albumName)
+                                .SetArtistName(albumArtist)
+                                .SetReleaseDate(releaseDate)
+                                .Build();
+
+                            albums.Add(album);
+
+                        }
+                    }
+                }
+            }
+            return albums;
+        }
+
+        public void Add(Album album)
         {
             int albumId;
 
@@ -81,22 +142,11 @@ namespace MusicCatalog.DAL.Repositories
                     albumId = Convert.ToInt32(command.ExecuteScalar());
                 }
 
-                query = @"
-                    INSERT INTO SONG (SONG_NAME, DURATION_SECONDS, ALBUM_ID, GENRE_NAME) 
-                    VALUES 
-                    (@SongName, @Duration, @AlbumId, @Genre)";
+                
 
                 foreach (var song in album.Songs)
                 {
-                    using (var command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@SongName", song.Name);
-                        command.Parameters.AddWithValue("@Duration", song.Duration);
-                        command.Parameters.AddWithValue("@AlbumId", albumId);
-                        command.Parameters.AddWithValue("@Genre", song.Genre);
-                        command.ExecuteNonQuery();
-                    }
-                    
+                    _songRepository.Add(song, albumId);
                 }
             }
         }

@@ -1,6 +1,6 @@
 ﻿using MusicCatalog.Core.Builders;
 using MusicCatalog.Core.Entities;
-using MusicCatalog.Core.Strategies;
+using MusicCatalog.Core.Strategies.Artists;
 using MusicCatalog.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,11 +23,11 @@ namespace MusicCatalog.WinFormsUI.Forms
 
         private List<Genre> _genres = new List<Genre>();
 
-        private static ArtistRepository _artistRepository = new ArtistRepository();
+        private static ArtistRepository _artistRepository = ArtistRepository.Instance;
         private ArtistSearchStrategy _artistSearchStrategy = new ArtistSearchStrategy(_artistRepository);
 
-        private AlbumRepository _albumRepository = new AlbumRepository();
-        private GenreRepository _genreRepository = new GenreRepository();
+        private AlbumRepository _albumRepository = AlbumRepository.Instance;
+        private GenreRepository _genreRepository = GenreRepository.Instance;
         public AlbumCreatingForm(AdministrationForm administrationForm)
         {
             InitializeComponent();
@@ -44,26 +44,6 @@ namespace MusicCatalog.WinFormsUI.Forms
         {
             _administrationForm.Show();
             this.Close();
-        }
-
-        private void Minutes_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Seconds_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SongName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AlbumName_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void AddSongButton_Click(object sender, EventArgs e)
@@ -150,7 +130,7 @@ namespace MusicCatalog.WinFormsUI.Forms
             }
             var albumBuilder = new AlbumBuilder();
             var album = albumBuilder.SetArtistName(ArtistBox.SelectedItem.ToString()).SetName(AlbumName.Text).AddSongs(_songList).Build();
-            _albumRepository.add(album);
+            _albumRepository.Add(album);
             AlbumName.Text = "";
             SongListBox.Items.Clear();
             ArtistBox.SelectedItem = null;

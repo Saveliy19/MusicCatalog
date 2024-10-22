@@ -42,9 +42,15 @@ namespace MusicCatalog.Core.Builders
             return this;
         }
 
-        public SongBuilder SetAlbumId(int albumId)
+        public SongBuilder SetAlbumName(string albumName)
         {
-            _song.AlbumId = albumId;
+            _song.AlbumName = albumName;
+            return this;
+        }
+
+        public SongBuilder SetArtistName(string artistName)
+        {
+            _song.ArtistName = artistName;
             return this;
         }
 

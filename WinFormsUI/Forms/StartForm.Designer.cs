@@ -79,10 +79,11 @@
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(1638, 89);
+            label1.Size = new Size(1750, 89);
             label1.TabIndex = 2;
             label1.Text = "Музыкальный каталог HardBass";
             label1.TextAlign = ContentAlignment.MiddleCenter;
+            label1.Click += label1_Click;
             // 
             // Genre
             // 
@@ -196,13 +197,13 @@
             // 
             SearchResult.Anchor = AnchorStyles.Top;
             SearchResult.BackColor = Color.Black;
-            SearchResult.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SearchResult.Font = new Font("Segoe UI Semibold", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 204);
             SearchResult.ForeColor = SystemColors.HighlightText;
             SearchResult.FormattingEnabled = true;
-            SearchResult.ItemHeight = 46;
+            SearchResult.ItemHeight = 37;
             SearchResult.Location = new Point(779, 220);
             SearchResult.Name = "SearchResult";
-            SearchResult.Size = new Size(871, 740);
+            SearchResult.Size = new Size(983, 744);
             SearchResult.TabIndex = 0;
             SearchResult.SelectedIndexChanged += SearchResult_SelectedIndexChanged;
             // 
@@ -265,9 +266,9 @@
             SearchResultLabel.BackColor = Color.Black;
             SearchResultLabel.Font = new Font("Showcard Gothic", 13.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SearchResultLabel.ForeColor = SystemColors.ButtonHighlight;
-            SearchResultLabel.Location = new Point(779, 109);
+            SearchResultLabel.Location = new Point(779, 110);
             SearchResultLabel.Name = "SearchResultLabel";
-            SearchResultLabel.Size = new Size(871, 95);
+            SearchResultLabel.Size = new Size(983, 95);
             SearchResultLabel.TabIndex = 1;
             SearchResultLabel.Text = "Результаты поиска";
             SearchResultLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -278,7 +279,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1662, 984);
+            ClientSize = new Size(1774, 984);
             Controls.Add(SearchResultLabel);
             Controls.Add(exitButton);
             Controls.Add(SearchResult);
@@ -289,7 +290,7 @@
             Controls.Add(label1);
             Controls.Add(SearchBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximumSize = new Size(1689, 1056);
+            MaximumSize = new Size(1800, 1056);
             Name = "StartForm";
             Text = "HardBass";
             SearchButtonsBox.ResumeLayout(false);

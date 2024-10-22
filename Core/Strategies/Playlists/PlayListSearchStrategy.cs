@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicCatalog.Core.Strategies
+namespace MusicCatalog.Core.Strategies.Playlists
 {
     internal class PlayListSearchStrategy : ISearchStrategy<PlayList>
     {
-        private readonly IRepository<PlayList> _repository;
+        private readonly IPlaylistRepository _repository;
 
-        public PlayListSearchStrategy(IRepository<PlayList> repository) { _repository = repository; }
+        public PlayListSearchStrategy(IPlaylistRepository repository) { _repository = repository; }
         public List<PlayList> Search(string searchQuery)
         {
-            return _repository.Search(searchQuery);
+            return _repository.SearchByName(searchQuery);
         }
     }
 }

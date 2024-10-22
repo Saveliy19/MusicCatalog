@@ -10,9 +10,25 @@ using System.Threading.Tasks;
 
 namespace MusicCatalog.DAL.Repositories
 {
-    internal class GenreRepository: IRepository<Genre>
+    internal class GenreRepository
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
+
+        private static GenreRepository _instance;
+
+        private GenreRepository() { }
+
+        public static GenreRepository Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GenreRepository();
+                }
+                return _instance;
+            }
+        }
 
         public List<Genre> Search(string? searchQuery) 
         {

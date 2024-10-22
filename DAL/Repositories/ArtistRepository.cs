@@ -8,10 +8,26 @@ using MusicCatalog.Core.Interfaces;
 
 namespace MusicCatalog.DAL.Repositories
 {
-    internal class ArtistRepository : IRepository<Artist>
+    internal class ArtistRepository: IArtistRepository
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
-        public List<Artist> Search(string searchQuery)
+
+        private static ArtistRepository _instance;
+
+        private ArtistRepository() { }
+
+        public static ArtistRepository Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ArtistRepository();
+                }
+                return _instance;
+            }
+        }
+        public List<Artist> SearchByName(string searchQuery)
         {
             var artists = new List<Artist>();
 
@@ -55,7 +71,7 @@ namespace MusicCatalog.DAL.Repositories
             return artists;
         }
 
-        public void add(Artist artist)
+        public void Add(Artist artist)
         {
             using (var connection = new SQLiteConnection(_connectionString))
             {

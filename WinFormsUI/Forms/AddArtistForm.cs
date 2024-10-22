@@ -1,4 +1,6 @@
 ﻿using MusicCatalog.Core.Builders;
+using MusicCatalog.Core.Entities;
+using MusicCatalog.Core.Strategies.Artists;
 using MusicCatalog.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,8 @@ namespace MusicCatalog.WinFormsUI.Forms
     {
         private string _artistName;
         private AdministrationForm _administrationForm;
-        private ArtistRepository _artistRepository = new ArtistRepository();
+        private static ArtistRepository _artistRepository = ArtistRepository.Instance;
+        private ArtistSearchContext _artistSearchContext = new ArtistSearchContext(new ArtistSearchStrategy(_artistRepository));
         public AddArtistForm(AdministrationForm adminForm)
         {
             InitializeComponent();
@@ -33,7 +36,7 @@ namespace MusicCatalog.WinFormsUI.Forms
             var artistBuilder = new ArtistBuilder();
             var artist = artistBuilder.SetNickname(textBox1.Text).Build();
             textBox1.Text = "";
-            var existing_artist = _artistRepository.Search(_artistName);
+            var existing_artist = _artistSearchContext.Search(_artistName);
             foreach (var item in existing_artist) 
             {
                 if (item.Nickname == artist.Nickname) 
@@ -42,7 +45,7 @@ namespace MusicCatalog.WinFormsUI.Forms
                     return;
                 }
             }
-            _artistRepository.add(artist);
+            _artistRepository.Add(artist);
             MessageBox.Show("Музыкант успешно создан!");
         }
 

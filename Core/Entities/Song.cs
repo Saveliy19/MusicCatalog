@@ -12,6 +12,8 @@ namespace MusicCatalog.Core.Entities
         public string Name { get; set; }
         public int Duration { get; set; }
         public string Genre { get; set; }
-        public int AlbumId { get; set; }
+        public string AlbumName { get; set; }
+
+        public string ArtistName { get; set; }
     }
 }

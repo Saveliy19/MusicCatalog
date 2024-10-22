@@ -6,23 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicCatalog.Core.Strategies
+namespace MusicCatalog.Core.Strategies.Albums
 {
-    internal class SongSearchContext: ISearchContext<Song>
+    internal class AlbumSearchContext: ISearchContext<Album>
     {
-        private ISearchStrategy<Song> _searchStrategy;
+        private ISearchStrategy<Album> _searchStrategy;
 
-        public SongSearchContext(ISearchStrategy<Song> searchStrategy)
+        public AlbumSearchContext(ISearchStrategy<Album> searchStrategy)
         {
             _searchStrategy = searchStrategy;
         }
 
-        public void SetStrategy(ISearchStrategy<Song> searchStrategy)
+        public void SetStrategy(ISearchStrategy<Album> searchStrategy)
         {
             _searchStrategy = searchStrategy;
         }
 
-        public List<Song> Search(string searchQuery) 
+        public List<Album> Search(string searchQuery)
         {
             return _searchStrategy.Search(searchQuery);
         }

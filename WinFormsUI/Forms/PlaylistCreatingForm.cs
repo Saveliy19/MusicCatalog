@@ -1,5 +1,4 @@
 ﻿using MusicCatalog.Core.Entities;
-using MusicCatalog.Core.Strategies;
 using MusicCatalog.DAL.Repositories;
 using MusicCatalog.Core.Builders;
 using System;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MusicCatalog.Core.Strategies.Songs;
 
 namespace MusicCatalog.WinFormsUI.Forms
 {
@@ -19,10 +19,10 @@ namespace MusicCatalog.WinFormsUI.Forms
     {
         private string _searchQuery;
         private AdministrationForm _administrationForm;
-        private static SongRepository _songRepository = new SongRepository();
-        private static SongNameSearchStrategy _songNameSearchStrategy = new SongNameSearchStrategy(_songRepository);
-        private SongSearchContext _songSearchContext = new SongSearchContext(_songNameSearchStrategy);
-        private PlayListRepository _playlistRepository = new PlayListRepository();
+
+        private SongSearchContext _songSearchContext = new SongSearchContext(new SongNameSearchStrategy(SongRepository.Instance));
+
+        
 
         private List<Song> _songList = new List<Song>();
         public PlaylistCreatingForm(AdministrationForm administrationForm)
@@ -106,8 +106,8 @@ namespace MusicCatalog.WinFormsUI.Forms
             if (_songList.Count > 0 && PlaylistName.Text != "")
             {
                 var playlist = new PlayListBuilder().SetName(PlaylistName.Text).AddSongs(_songList).Build();
-                var playlistRepository = new PlayListRepository();
-                playlistRepository.add(playlist);
+                var playlistRepository = PlayListRepository.Instance;
+                playlistRepository.Add(playlist);
                 PlayListSongs.Items.Clear();
                 _songList.Clear();
                 MessageBox.Show($"Плейлист {PlaylistName.Text} успешно создан");
