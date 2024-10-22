@@ -1,20 +1,13 @@
-﻿using MusicCatalog.Core.Interfaces;
+﻿using MusicCatalog.Core.Builders;
 using MusicCatalog.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MusicCatalog.Core.Builders;
+using MusicCatalog.Core.Interfaces;
 using System.Data.SQLite;
 
 namespace MusicCatalog.DAL.Repositories
 {
-    internal class SongRepository: ISongRepository
+    internal class SongRepository : ISongRepository
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
-
-
         private static SongRepository _instance;
 
         private SongRepository() { }
@@ -30,181 +23,30 @@ namespace MusicCatalog.DAL.Repositories
                 return _instance;
             }
         }
+
         public List<Song> SearchByName(string searchQuery)
         {
-            List<Song> songList = new List<Song>();
-
-            using (var connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-
-                var query = @"
-                    SELECT 
-                        S.SONG_NAME 
-                        ,S.GENRE_NAME 
-                        ,S.ID AS ID
-                        ,S.DURATION_SECONDS
-                        ,A.ALBUM_NAME
-                        ,A.ARTIST_NICKNAME
-                    FROM 
-                    SONG S JOIN ALBUM A
-                    ON A.ID = S.ALBUM_ID
-                    WHERE SONG_NAME LIKE @SearchQuery";
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@SearchQuery", "%" + searchQuery + "%");
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var songName = reader["SONG_NAME"].ToString();
-                            var songGenre = reader["GENRE_NAME"].ToString();
-                            var songId = Convert.ToInt32(reader["ID"]);
-                            var albumName = reader["ALBUM_NAME"].ToString();
-                            var artistNickname = reader["ARTIST_NICKNAME"].ToString();
-                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
-
-
-                            var songBuilder = new SongBuilder();
-                            var song = songBuilder
-                                    .SetId(songId)
-                                    .SetName(songName)
-                                    .SetGenre(songGenre)
-                                    .SetAlbumName(albumName)
-                                    .SetArtistName(artistNickname)
-                                    .SetDuration(duration)
-                                    .Build();
-
-                            songList.Add(song);
-
-                        }
-                    }
-                }
-            }
-
-            return songList;
+            return SearchSongs("SONG_NAME", searchQuery, isLike: true);
         }
 
         public List<Song> SearchByAlbum(int albumId)
         {
-            List<Song> songList = new List<Song>();
-
-            using (var connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-
-                var query = @"
-                    SELECT 
-                        S.SONG_NAME 
-                        ,S.GENRE_NAME 
-                        ,S.ID AS ID
-                        ,S.DURATION_SECONDS
-                        ,A.ALBUM_NAME
-                        ,A.ARTIST_NICKNAME
-                    FROM 
-                    SONG S JOIN ALBUM A
-                    ON A.ID = S.ALBUM_ID
-                    WHERE S.ALBUM_ID = @SearchQuery";
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@SearchQuery", albumId);
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var songName = reader["SONG_NAME"].ToString();
-                            var songGenre = reader["GENRE_NAME"].ToString();
-                            var songId = Convert.ToInt32(reader["ID"]);
-                            var albumName = reader["ALBUM_NAME"].ToString();
-                            var artistNickname = reader["ARTIST_NICKNAME"].ToString();
-                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
-
-
-                            var songBuilder = new SongBuilder();
-                            var song = songBuilder
-                                    .SetId(songId)
-                                    .SetName(songName)
-                                    .SetGenre(songGenre)
-                                    .SetAlbumName(albumName)
-                                    .SetArtistName(artistNickname)
-                                    .SetDuration(duration)
-                                    .Build();
-
-                            songList.Add(song);
-
-                        }
-                    }
-                }
-            }
-
-            return songList;
+            return SearchSongs("S.ALBUM_ID", albumId.ToString(), isLike: false);
         }
 
         public List<Song> SearchByGenre(string genreName)
         {
-            List<Song> songList = new List<Song>();
-
-            using (var connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-
-                var query = @"
-                    SELECT 
-                        S.SONG_NAME 
-                        ,S.GENRE_NAME 
-                        ,S.ID AS ID
-                        ,S.DURATION_SECONDS
-                        ,A.ALBUM_NAME
-                        ,A.ARTIST_NICKNAME
-                    FROM 
-                    SONG S JOIN ALBUM A
-                    ON A.ID = S.ALBUM_ID
-                    WHERE S.GENRE_NAME LIKE @SearchQuery";
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@SearchQuery", "%" + genreName + "%");
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var songName = reader["SONG_NAME"].ToString();
-                            var songGenre = reader["GENRE_NAME"].ToString();
-                            var songId = Convert.ToInt32(reader["ID"]);
-                            var albumName = reader["ALBUM_NAME"].ToString();
-                            var artistNickname = reader["ARTIST_NICKNAME"].ToString();
-                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
-
-
-                            var songBuilder = new SongBuilder();
-                            var song = songBuilder
-                                    .SetId(songId)
-                                    .SetName(songName)
-                                    .SetGenre(songGenre)
-                                    .SetAlbumName(albumName)
-                                    .SetArtistName(artistNickname)
-                                    .SetDuration(duration)
-                                    .Build();
-
-                            songList.Add(song);
-
-                        }
-                    }
-                }
-            }
-
-            return songList;
+            return SearchSongs("S.GENRE_NAME", genreName, isLike: true);
         }
-
 
         public List<Song> SearchByPlaylist(int playlistId)
         {
-            List<Song> songList = new List<Song>();
+            return SearchSongs("PS.PLAYLIST_ID", playlistId.ToString(), isLike: false, isJoinPlaylist: true);
+        }
+
+        private List<Song> SearchSongs(string searchField, string searchTerm, bool isLike, bool isJoinPlaylist = false)
+        {
+            var songList = new List<Song>();
 
             using (var connection = new SQLiteConnection(_connectionString))
             {
@@ -212,22 +54,27 @@ namespace MusicCatalog.DAL.Repositories
 
                 var query = @"
                     SELECT 
-                        S.SONG_NAME 
-                        ,S.GENRE_NAME 
-                        ,S.ID AS ID
-                        ,S.DURATION_SECONDS
-                        ,A.ALBUM_NAME
-                        ,A.ARTIST_NICKNAME
+                        S.SONG_NAME,
+                        S.GENRE_NAME,
+                        S.ID AS ID,
+                        S.DURATION_SECONDS,
+                        A.ALBUM_NAME,
+                        A.ARTIST_NICKNAME
                     FROM 
-                    SONG S JOIN ALBUM A
-                    ON A.ID = S.ALBUM_ID
-                    JOIN PLAYLIST_SONGS PS
-                    ON PS.SONG_ID = S.ID
-                    WHERE PS.PLAYLIST_ID = @SearchQuery";
+                        SONG S 
+                    JOIN 
+                        ALBUM A ON A.ID = S.ALBUM_ID ";
+
+                if (isJoinPlaylist)
+                {
+                    query += "JOIN PLAYLIST_SONGS PS ON PS.SONG_ID = S.ID ";
+                }
+
+                query += $"WHERE {searchField} {(isLike ? "LIKE" : "=")} @SearchQuery";
 
                 using (var command = new SQLiteCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@SearchQuery", playlistId);
+                    command.Parameters.AddWithValue("@SearchQuery", isLike ? "%" + searchTerm + "%" : searchTerm);
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -240,19 +87,17 @@ namespace MusicCatalog.DAL.Repositories
                             var artistNickname = reader["ARTIST_NICKNAME"].ToString();
                             var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
 
-
                             var songBuilder = new SongBuilder();
                             var song = songBuilder
-                                    .SetId(songId)
-                                    .SetName(songName)
-                                    .SetGenre(songGenre)
-                                    .SetAlbumName(albumName)
-                                    .SetArtistName(artistNickname)
-                                    .SetDuration(duration)
-                                    .Build();
+                                .SetId(songId)
+                                .SetName(songName)
+                                .SetGenre(songGenre)
+                                .SetAlbumName(albumName)
+                                .SetArtistName(artistNickname)
+                                .SetDuration(duration)
+                                .Build();
 
                             songList.Add(song);
-
                         }
                     }
                 }
@@ -266,6 +111,7 @@ namespace MusicCatalog.DAL.Repositories
             using (var connection = new SQLiteConnection(_connectionString))
             {
                 connection.Open();
+
                 var query = @"
                     INSERT INTO SONG (SONG_NAME, DURATION_SECONDS, ALBUM_ID, GENRE_NAME) 
                     VALUES 
@@ -279,10 +125,7 @@ namespace MusicCatalog.DAL.Repositories
                     command.Parameters.AddWithValue("@Genre", song.Genre);
                     command.ExecuteNonQuery();
                 }
-
             }
-            
         }
     }
 }
-

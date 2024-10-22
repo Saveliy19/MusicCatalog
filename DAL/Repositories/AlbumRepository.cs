@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MusicCatalog.Core.Interfaces;
+﻿using MusicCatalog.Core.Builders;
 using MusicCatalog.Core.Entities;
+using MusicCatalog.Core.Interfaces;
 using System.Data.SQLite;
-using MusicCatalog.Core.Builders;
-using System.Xml.Linq;
 
 namespace MusicCatalog.DAL.Repositories
 {
-    internal class AlbumRepository: IAlbumRepository
+    internal class AlbumRepository : IAlbumRepository
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
         private ISongRepository _songRepository = SongRepository.Instance;
@@ -35,65 +28,30 @@ namespace MusicCatalog.DAL.Repositories
 
         public List<Album> SearchByName(string name)
         {
-            var albums = new List<Album>();
-
-            using (var connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-
-                var query = @"
-                    SELECT *
-                    FROM ALBUM 
-                    WHERE ALBUM_NAME LIKE @SearchQuery";
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@SearchQuery", "%" + name + "%");
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var albumName = reader["ALBUM_NAME"].ToString();
-                            var albumArtist = reader["ARTIST_NICKNAME"].ToString();
-                            var releaseDate = Convert.ToDateTime(reader["RELEASE_DATE"]);
-
-                            var songs = _songRepository.SearchByAlbum(Convert.ToInt32(reader["ID"]));
-                            var albumBuilder = new AlbumBuilder();
-
-
-                            var album = albumBuilder
-                                .SetName(albumName)
-                                .SetArtistName(albumArtist)
-                                .SetReleaseDate(releaseDate)
-                                .AddSongs(songs)
-                                .Build();
-
-                            albums.Add(album);
-
-                        }
-                    }
-                }
-            }
-
-            return albums;
+            return SearchAlbums("ALBUM_NAME", name);
         }
 
         public List<Album> SearchByArtistName(string artistName)
         {
+            return SearchAlbums("ARTIST_NICKNAME", artistName);
+        }
+
+        private List<Album> SearchAlbums(string searchField, string searchTerm)
+        {
             var albums = new List<Album>();
+
             using (var connection = new SQLiteConnection(_connectionString))
             {
                 connection.Open();
 
-                var query = @"
+                var query = $@"
                     SELECT *
                     FROM ALBUM 
-                    WHERE ARTIST_NICKNAME LIKE @SearchQuery";
+                    WHERE {searchField} LIKE @SearchQuery";
 
                 using (var command = new SQLiteCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@SearchQuery", "%" + artistName + "%");
+                    command.Parameters.AddWithValue("@SearchQuery", "%" + searchTerm + "%");
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -106,8 +64,6 @@ namespace MusicCatalog.DAL.Repositories
                             var songs = _songRepository.SearchByAlbum(Convert.ToInt32(reader["ID"]));
 
                             var albumBuilder = new AlbumBuilder();
-
-
                             var album = albumBuilder
                                 .SetName(albumName)
                                 .SetArtistName(albumArtist)
@@ -116,11 +72,11 @@ namespace MusicCatalog.DAL.Repositories
                                 .Build();
 
                             albums.Add(album);
-
                         }
                     }
                 }
             }
+
             return albums;
         }
 
@@ -144,8 +100,6 @@ namespace MusicCatalog.DAL.Repositories
 
                     albumId = Convert.ToInt32(command.ExecuteScalar());
                 }
-
-                
 
                 foreach (var song in album.Songs)
                 {
