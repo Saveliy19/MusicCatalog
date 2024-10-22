@@ -17,6 +17,8 @@ namespace MusicCatalog.WinFormsUI.Forms
         private string _searchQuery = "";
         private string _criteria = "Genre";
 
+        List<PlayList> _playLists;
+
         private SongSearchContext _songSearchContext = new SongSearchContext(new SongGenreSearchStrategy(SongRepository.Instance));
         private ArtistSearchContext _artistSearchContext = new ArtistSearchContext(new ArtistSearchStrategy(ArtistRepository.Instance));
         private PlaylistSearchContext _playlistSearchContext = new PlaylistSearchContext(new PlayListSearchStrategy(PlayListRepository.Instance));
@@ -50,8 +52,8 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void ShowPlayLists()
         {
             SearchResult.Items.Clear();
-            List<PlayList> playLists = _playlistSearchContext.Search(_searchQuery);
-            foreach (var playlist in playLists)
+            _playLists = _playlistSearchContext.Search(_searchQuery);
+            foreach (var playlist in _playLists)
             {
                 SearchResult.Items.Add($"{playlist.Name} - {playlist.Id}");
             }
@@ -60,8 +62,7 @@ namespace MusicCatalog.WinFormsUI.Forms
         private void ShowSongs()
         {
             SearchResult.Items.Clear();
-            List<Song> songs;
-            songs = _songSearchContext.Search(_searchQuery);
+            List<Song> songs = _songSearchContext.Search(_searchQuery);
             foreach (var song in songs)
             {
                 SearchResult.Items.Add($"{song.Name}| исп.{song.ArtistName}| альб.{song.AlbumName}");
@@ -156,27 +157,33 @@ namespace MusicCatalog.WinFormsUI.Forms
 
         private void SearchResult_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             switch (_criteria)
             {
                 case "Artists":
-
+                    // Здесь ты можешь получить и обработать выбранного исполнителя
                     break;
 
                 case "Albums":
-
+                    // Здесь ты можешь получить и обработать выбранный альбом
                     break;
 
                 case "PlayLists":
-
+                    AboutPlaylistForm playlistForm = new AboutPlaylistForm(this, _playLists[SearchResult.SelectedIndex]);
+                    playlistForm.Show();
+                    this.Hide();
                     break;
 
-                case "Song" or "Genre":
+                case "Song":
+                case "Genre":
+                    // Здесь ты можешь обработать выбранную песню
                     break;
 
                 default:
                     MessageBox.Show("Пожалуйста, выберите критерий поиска.");
                     break;
             }
+            
         }
 
         private void label1_Click(object sender, EventArgs e)

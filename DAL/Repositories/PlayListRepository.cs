@@ -15,6 +15,8 @@ namespace MusicCatalog.DAL.Repositories
     {
         private readonly string _connectionString = "Data Source=MusicCatalog.db; Version=3;";
 
+        private SongRepository _songRepository = SongRepository.Instance;
+
         private static PlayListRepository _instance;
 
         private PlayListRepository() { }
@@ -55,12 +57,13 @@ namespace MusicCatalog.DAL.Repositories
                             var playListName = reader["PLAYLIST_NAME"].ToString();
                             var playListId = Convert.ToInt32(reader["ID"]);
 
-
+                            var songs = _songRepository.SearchByPlaylist(playListId);
 
                             var playlistBuilder = new PlayListBuilder();
                             var playlist = playlistBuilder
                                     .SetName(playListName)
                                     .SetId(playListId)
+                                    .AddSongs(songs)
                                     .Build();
 
                             playLists.Add(playlist);

@@ -43,6 +43,7 @@ namespace MusicCatalog.DAL.Repositories
                         S.SONG_NAME 
                         ,S.GENRE_NAME 
                         ,S.ID AS ID
+                        ,S.DURATION_SECONDS
                         ,A.ALBUM_NAME
                         ,A.ARTIST_NICKNAME
                     FROM 
@@ -63,6 +64,7 @@ namespace MusicCatalog.DAL.Repositories
                             var songId = Convert.ToInt32(reader["ID"]);
                             var albumName = reader["ALBUM_NAME"].ToString();
                             var artistNickname = reader["ARTIST_NICKNAME"].ToString();
+                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
 
 
                             var songBuilder = new SongBuilder();
@@ -72,6 +74,7 @@ namespace MusicCatalog.DAL.Repositories
                                     .SetGenre(songGenre)
                                     .SetAlbumName(albumName)
                                     .SetArtistName(artistNickname)
+                                    .SetDuration(duration)
                                     .Build();
 
                             songList.Add(song);
@@ -97,6 +100,7 @@ namespace MusicCatalog.DAL.Repositories
                         S.SONG_NAME 
                         ,S.GENRE_NAME 
                         ,S.ID AS ID
+                        ,S.DURATION_SECONDS
                         ,A.ALBUM_NAME
                         ,A.ARTIST_NICKNAME
                     FROM 
@@ -117,6 +121,7 @@ namespace MusicCatalog.DAL.Repositories
                             var songId = Convert.ToInt32(reader["ID"]);
                             var albumName = reader["ALBUM_NAME"].ToString();
                             var artistNickname = reader["ARTIST_NICKNAME"].ToString();
+                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
 
 
                             var songBuilder = new SongBuilder();
@@ -126,6 +131,7 @@ namespace MusicCatalog.DAL.Repositories
                                     .SetGenre(songGenre)
                                     .SetAlbumName(albumName)
                                     .SetArtistName(artistNickname)
+                                    .SetDuration(duration)
                                     .Build();
 
                             songList.Add(song);
@@ -151,6 +157,7 @@ namespace MusicCatalog.DAL.Repositories
                         S.SONG_NAME 
                         ,S.GENRE_NAME 
                         ,S.ID AS ID
+                        ,S.DURATION_SECONDS
                         ,A.ALBUM_NAME
                         ,A.ARTIST_NICKNAME
                     FROM 
@@ -171,6 +178,7 @@ namespace MusicCatalog.DAL.Repositories
                             var songId = Convert.ToInt32(reader["ID"]);
                             var albumName = reader["ALBUM_NAME"].ToString();
                             var artistNickname = reader["ARTIST_NICKNAME"].ToString();
+                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
 
 
                             var songBuilder = new SongBuilder();
@@ -180,6 +188,7 @@ namespace MusicCatalog.DAL.Repositories
                                     .SetGenre(songGenre)
                                     .SetAlbumName(albumName)
                                     .SetArtistName(artistNickname)
+                                    .SetDuration(duration)
                                     .Build();
 
                             songList.Add(song);
@@ -206,13 +215,14 @@ namespace MusicCatalog.DAL.Repositories
                         S.SONG_NAME 
                         ,S.GENRE_NAME 
                         ,S.ID AS ID
+                        ,S.DURATION_SECONDS
                         ,A.ALBUM_NAME
                         ,A.ARTIST_NICKNAME
                     FROM 
                     SONG S JOIN ALBUM A
                     ON A.ID = S.ALBUM_ID
                     JOIN PLAYLIST_SONGS PS
-                    ON PS.SONG_ID = SONG.ID
+                    ON PS.SONG_ID = S.ID
                     WHERE PS.PLAYLIST_ID = @SearchQuery";
 
                 using (var command = new SQLiteCommand(query, connection))
@@ -228,6 +238,7 @@ namespace MusicCatalog.DAL.Repositories
                             var songId = Convert.ToInt32(reader["ID"]);
                             var albumName = reader["ALBUM_NAME"].ToString();
                             var artistNickname = reader["ARTIST_NICKNAME"].ToString();
+                            var duration = Convert.ToInt32(reader["DURATION_SECONDS"]);
 
 
                             var songBuilder = new SongBuilder();
@@ -237,6 +248,7 @@ namespace MusicCatalog.DAL.Repositories
                                     .SetGenre(songGenre)
                                     .SetAlbumName(albumName)
                                     .SetArtistName(artistNickname)
+                                    .SetDuration(duration)
                                     .Build();
 
                             songList.Add(song);
